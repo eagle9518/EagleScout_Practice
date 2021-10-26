@@ -6,15 +6,15 @@ from openpyxl import Workbook
 from openpyxl.formatting.rule import CellIsRule
 from openpyxl.styles import PatternFill
 
-Year = 2020
-event = 'utwv'
-TEAM = 2122
+Year = 2021
+event = '2021cc'
+TEAM = 254
 UBToffset = -7
 
-Event = str(Year) + event
+Event = event
 
-if os.path.exists('Match_Schedule\Match_Schdule.xlsx'):
-    os.remove('Match_Schedule\Match_Schdule.xlsx')
+if os.path.exists('Match_Schedule\Match Schedule.xlsx'):
+    os.remove('Match_Schedule\Match Schedule.xlsx')
 
 greenFill = PatternFill(start_color='ACF99D', end_color='ACF99D', fill_type='solid')
 
@@ -62,13 +62,13 @@ for i in range(1, len(schedule_keys)):
     result = tba.match(schedule_keys[i], simple=True)
     if result.comp_level == 'qm':
         Q += 1
-# print(Q)
+
 S = 1
 for i in range(1, Q + 1):
     results = tba.match(Event + '_qm' + str(i), simple=True)
     if results.comp_level == 'qm':
         mn = results.match_number
-        tu = results.predicted_time
+        tu = results.time
         tm = datetime.datetime.utcfromtimestamp(tu + (UBToffset * 3600))  # Convert UNIX time to local time
         R1 = results.alliances['red']['team_keys'][0]
         R1 = R1[3:]
@@ -107,14 +107,13 @@ for h in Headers:
 
 S = 1
 Tm_Sched = tba.team_matches(TEAM, Event, simple=True, keys=True)
-# print(Tm_Sched)
+
 
 for i in range(1, Q + 1):
     if Event + '_qm' + str(i) in Tm_Sched:
-        # print(Event + '_qm' + str(i))
         results = tba.match(Event + '_qm' + str(i), simple=True)
         mn = results.match_number
-        tu = results.predicted_time
+        tu = results.time
         tm = datetime.datetime.utcfromtimestamp(tu + (UBToffset * 3600))  # Convert UNIX time to local time
         R1 = results.alliances['red']['team_keys'][0]
         R1 = R1[3:]

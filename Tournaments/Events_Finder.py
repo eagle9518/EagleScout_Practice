@@ -1,14 +1,17 @@
-# import os
+import os
 import tbapy
 from openpyxl import Workbook
 
-YEAR = '2020'
+YEAR = '2021'
 
 Sched = Workbook()
 ws = Sched.active
 ws.title = "All_Tournaments"
 
 tba = tbapy.TBA('opXlAfkuD4tQbDm2iskpBHdyYQbarWsQoeSG8w6MSKQ0c8jtbOnbREQu7z7nfUCK')
+
+if os.path.exists("Tournaments\All_Tournaments2020.xlsx"):
+    os.remove("Tournaments\All_Tournaments2020.xlsx")
 
 schedule_keys = tba.events(YEAR, simple=False, keys=False)
 for i in range(1, len(schedule_keys)):
