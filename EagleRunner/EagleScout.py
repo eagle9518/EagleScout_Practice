@@ -109,10 +109,9 @@ db = pd.read_excel("EagleRunner/Spreadsheets/ScoreContrib.xlsx")
 db.to_sql("Raw_Data", con, if_exists='replace', index=False)
 
 with pd.ExcelWriter("EagleRunner/Spreadsheets/Master.xlsx") as writer:
-    df2 = pd.read_excel("EagleRunner/Spreadsheets/ScoreContrib.xlsx",
-                        converters=StrToInt_dict)
+    df2 = pd.read_excel("EagleRunner/Spreadsheets/ScoreContrib.xlsx", converters=StrToInt_dict)
 
-    group = df2.groupby('Team')
+    group = df2.groupby("Team")
     for Team, Team_df in group:
         Team_df.to_excel(writer, sheet_name=("T" + str(Team)),
                          index=False)
